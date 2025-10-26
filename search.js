@@ -1,4 +1,4 @@
-// search.js
+
 
 const searchInput = document.getElementById('search-box');
 const searchResults = document.getElementById('search-results');
@@ -20,13 +20,12 @@ function showSearchResults(results) {
   }
 
   searchResults.innerHTML = '';
-  
-  // Create result items
+
   results.forEach(item => {
     const resultItem = document.createElement('div');
     resultItem.className = 'search-result-item';
     
-    // Create a copy of the list item for the results
+
     const content = document.createElement('div');
     content.className = 'result-content';
     
@@ -42,7 +41,7 @@ function showSearchResults(results) {
     content.appendChild(date);
     resultItem.appendChild(content);
     
-    // Add click handler to scroll to the original item
+
     resultItem.addEventListener('click', () => {
       const originalItem = document.querySelector(`li[data-id="${item.id}"]`);
       if (originalItem) {
@@ -63,13 +62,12 @@ function showSearchResults(results) {
 function searchTasks(query) {
   const q = normalize(query);
   
-  // Hide results if query is too short
+
   if (q.length < 2) {
     hideSearchResults();
     return;
   }
-  
-  // Get all list items
+
   const items = Array.from(listEl.querySelectorAll('li')).map(li => ({
     id: li.dataset.id,
     text: li.querySelector('.task-text')?.textContent || '',
@@ -77,7 +75,6 @@ function searchTasks(query) {
     element: li
   }));
 
-  // Filter items that match the query
   const matches = items.filter(item => {
     const text = normalize(item.text);
     const date = normalize(item.date);
@@ -87,9 +84,9 @@ function searchTasks(query) {
   showSearchResults(matches);
 }
 
-// Set up event listeners
+
 if (searchInput && searchResults) {
-  // Debounce search input
+
   let searchTimeout;
   searchInput.addEventListener('input', () => {
     clearTimeout(searchTimeout);
@@ -98,14 +95,14 @@ if (searchInput && searchResults) {
     }, 150);
   });
 
-  // Close search results when clicking outside
+
   document.addEventListener('click', (e) => {
     if (!searchResults.contains(e.target) && !searchInput.contains(e.target)) {
       hideSearchResults();
     }
   });
 
-  // Close search results when pressing Escape
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       hideSearchResults();
@@ -114,7 +111,7 @@ if (searchInput && searchResults) {
   });
 }
 
-// Scroll to the LI matching a task id and briefly highlight it
+
 function jumpToTask(taskId) {
   const todo = window.todo;
   if (!todo || !todo.listEl) return;
@@ -122,16 +119,16 @@ function jumpToTask(taskId) {
   const li = todo.listEl.querySelector(`li[data-id="${taskId}"]`);
   if (!li) return;
 
-  // Ensure it's visible (in case you later add filtering)
+
   li.style.display = '';
 
   li.scrollIntoView({ behavior: 'smooth', block: 'center' });
   li.classList.add('search-target-highlight');
-  // Remove highlight after a moment
+
   setTimeout(() => li.classList.remove('search-target-highlight'), 1200);
 }
 
-// Events
+
 if (searchInput && suggBox) {
   let debounce;
   searchInput.addEventListener('input', () => {
@@ -139,7 +136,7 @@ if (searchInput && suggBox) {
     debounce = setTimeout(() => buildSuggestions(searchInput.value), 120);
   });
 
-  // Click / keyboard selection on a suggestion
+
   suggBox.addEventListener('click', (e) => {
     const item = e.target.closest('.item');
     if (!item) return;
@@ -156,8 +153,8 @@ if (searchInput && suggBox) {
       jumpToTask(id);
     }
   });
-
-  // Hide suggestions when leaving the field (slight delay to allow click)
+)
   searchInput.addEventListener('blur', () => setTimeout(closeSuggestions, 150));
   suggBox.addEventListener('blur', () => setTimeout(closeSuggestions, 150));
 }
+
