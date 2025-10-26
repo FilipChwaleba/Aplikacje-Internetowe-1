@@ -1,14 +1,13 @@
-// In-memory store (id, text, due)
+
 let tasks = [];
 
-// DOM
+
 const input = document.getElementById('input-box');
-const dateInput = document.getElementById('input-date'); // required for dates
+const dateInput = document.getElementById('input-date'); 
 const addBtn = document.getElementById('add-btn');
 const listEl = document.getElementById('list');
 
-// Helpers
-// ---- Local Storage helpers ----
+
 function saveTasks() {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
@@ -25,14 +24,14 @@ function loadTasks() {
   }
 }
 
-// Load from localStorage first
+
 loadTasks();
 
 if (tasks.length > 0) {
-  // Render saved tasks
+
   tasks.forEach(t => listEl.appendChild(renderTaskItem(t)));
 } else {
-  // If no saved tasks, use default items from HTML
+  
   const items = Array.from(listEl.querySelectorAll('li'));
   items.forEach(li => {
     const textParts = [];
@@ -48,7 +47,7 @@ if (tasks.length > 0) {
       li.remove();
     }
   });
-  saveTasks(); // Save defaults the first time
+  saveTasks(); 
 }
 
 function addTask() {
@@ -59,7 +58,7 @@ function addTask() {
   tasks.push(task);
   const li = renderTaskItem(task);
   listEl.appendChild(li);
-  saveTasks(); // <-- ADD HERE
+  saveTasks();
   input.value = '';
   if (dateInput) dateInput.value = '';
   input.focus();
@@ -69,7 +68,7 @@ function removeTask(taskId) {
   tasks = tasks.filter(t => t.id !== taskId);
   const li = listEl.querySelector(`li[data-id="${taskId}"]`);
   if (li) li.remove();
-  saveTasks(); // <-- ADD HERE
+  saveTasks(); 
 }
 
 
@@ -77,16 +76,16 @@ function makeTask(text, due = "") {
   return {
     id: String(Date.now()) + Math.random().toString(16).slice(2),
     text: text.trim(),
-    due: (due || "").trim() // "" or YYYY-MM-DD
+    due: (due || "").trim()
   };
 }
 
-// If due is "", show nothing; else show "— YYYY-MM-DD"
+
 function formatDue(due) {
   return due ? `— ${due}` : "";
 }
 
-// Build one <li>
+
 function renderTaskItem(task) {
   const li = document.createElement('li');
   li.dataset.id = task.id;
@@ -119,7 +118,7 @@ function renderTaskItem(task) {
   return li;
 }
 
-// Inline edit for text or due
+
 function startInlineEdit(spanEl, taskId, field /* 'text' | 'due' */) {
   const isText = field === 'text';
   const inputEl = document.createElement('input');
@@ -128,7 +127,7 @@ function startInlineEdit(spanEl, taskId, field /* 'text' | 'due' */) {
   if (isText) {
     inputEl.value = spanEl.textContent;
   } else {
-    // span shows "— YYYY-MM-DD" or empty; strip leading "— "
+   "
     const raw = spanEl.textContent.replace(/^—\s*/, '');
     inputEl.value = raw || '';
   }
@@ -146,9 +145,9 @@ function startInlineEdit(spanEl, taskId, field /* 'text' | 'due' */) {
     if (!task) return;
 
     if (isText) {
-      if (val) task.text = val; // ignore empty
+      if (val) task.text = val; 
     } else {
-      task.due = val; // "" or YYYY-MM-DD
+      task.due = val; 
     }
 
     const newSpan = document.createElement('span');
@@ -178,11 +177,11 @@ function startInlineEdit(spanEl, taskId, field /* 'text' | 'due' */) {
   inputEl.addEventListener('blur', commit);
 }
 
-// Bootstrap existing static <li> to our structured UI
+
 (function bootstrapFromDOM() {
   const items = Array.from(listEl.querySelectorAll('li'));
   items.forEach(li => {
-    // collect text between checkbox and delete button
+  
     const textParts = [];
     for (const node of li.childNodes) {
       if (node.nodeType === Node.TEXT_NODE) textParts.push(node.textContent);
@@ -191,35 +190,35 @@ function startInlineEdit(spanEl, taskId, field /* 'text' | 'due' */) {
     if (taskText) {
       const t = makeTask(taskText, "");
       tasks.push(t);
-      li.replaceWith(renderTaskItem(t)); // normalize to our structure
+      li.replaceWith(renderTaskItem(t)); 
     } else {
       li.remove();
     }
   });
 })();
 
-// Add (now reads the visible date input and shows it immediately)
+
 function addTask() {
   const value = input.value.trim();
   if (!value) return;
   const dueVal = dateInput ? dateInput.value.trim() : "";
   const task = makeTask(value, dueVal);
   tasks.push(task);
-  const li = renderTaskItem(task); // will hide dateSpan if empty, or show date right away
+  const li = renderTaskItem(task); 
   listEl.appendChild(li);
   input.value = '';
   if (dateInput) dateInput.value = '';
   input.focus();
 }
 
-// Remove
+
 function removeTask(taskId) {
   tasks = tasks.filter(t => t.id !== taskId);
   const li = listEl.querySelector(`li[data-id="${taskId}"]`);
   if (li) li.remove();
 }
 
-// Events
+
 addBtn.addEventListener('click', addTask);
 input.addEventListener('keydown', (e) => { if (e.key === 'Enter') addTask(); });
 if (dateInput) {
@@ -244,6 +243,7 @@ listEl.addEventListener('click', (e) => {
     return;
   }
 });
+
 
 
 
