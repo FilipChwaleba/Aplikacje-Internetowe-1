@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag-and-drop</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Add Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="leaflet-src.js" defer></script>
+    <script src="leaflet-providers.js" defer></script>
+    <script src="leaflet-image.js" defer></script>
+    <script src="lab3.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div id="map"></div>
+        <div class="drag-target grid-target"></div>
+    </div>
+
+    <div class="controls">
+        <button id="getLocation" onclick="getLocation()">Get Location</button>
+        <button id="saveButton" onclick="saveMap()">Save Map</button>
+    </div>
+
+    <div id="positionInfo">
+        <strong>Latitude:</strong> <span id="latitude"></span><br>
+        <strong>Longitude:</strong> <span id="longitude"></span><br>
+    </div>
+
+    <div class="cubes">
+        Cubes
+        <br>
+        <div id="draggable-item-1" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-2" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-3" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-4" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-5" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-6" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-7" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-8" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-9" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-10" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-11" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-12" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-13" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-14" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-15" class="item draggable" draggable="true"></div>
+        <div id="draggable-item-16" class="item draggable" draggable="true"></div>
+        
+
+    </div>
+</body>
+</html>
